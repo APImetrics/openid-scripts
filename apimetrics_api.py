@@ -49,7 +49,7 @@ class APImetricsAPI:
             for token in self.tokens.values():
                 auth_id = token['meta']['auth_id']
                 self._tokens_by_auth[auth_id] = token['id']
-            print(f'Tokens for auths: {", ".join(self.auths[auth]["meta"]["name"] for auth in self._tokens_by_auth.keys())}')
+            print(f'Tokens for auths: {", ".join(self.auths.get(auth, {}).get("meta", {}).get("name", auth) for auth in self._tokens_by_auth.keys())}')
         return self._tokens_by_auth
     
     @property
