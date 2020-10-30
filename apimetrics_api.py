@@ -172,6 +172,9 @@ class APImetricsAPI:
         self._calls = None
         self._calls_by_tag = None
         return self.post("calls/", setup)
+    
+    def set_call_conditions(self, call_id, setup):
+        return self.post("calls/{}/conditions/".format(call_id), setup)
 
     def create_token(self, setup):
         self._tokens = None
