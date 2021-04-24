@@ -92,7 +92,7 @@ class APImetricsAPI:
         other_headers = self.POST_HEADERS if is_post else self.GET_HEADERS
         return {"Authorization": "Bearer {}".format(self.api_key), **other_headers}
 
-    def get(self, path, params):
+    def get(self, path, params=None):
         resp = requests.get(
             "{}/{path}".format(self.BASE_URL, path=path),
             headers=self.headers(),
@@ -172,6 +172,9 @@ class APImetricsAPI:
         self._calls = None
         self._calls_by_tag = None
         return self.post("calls/", setup)
+
+    def get_call_conditions(self, call_id):
+        return self.get("calls/{}/conditions/".format(call_id))
     
     def set_call_conditions(self, call_id, setup):
         return self.post("calls/{}/conditions/".format(call_id), setup)
