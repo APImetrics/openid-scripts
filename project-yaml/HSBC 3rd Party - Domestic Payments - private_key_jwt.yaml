@@ -1,0 +1,336 @@
+---
+$schema: https://client.apimetrics.io/api/2/import/schema.json
+project:
+  auth:
+  - id: transport-matls-apimetrics-obwac
+    meta:
+      description: Mutual Authenticated TLS for calls to bank APIs
+      documentation:
+        apps: ''
+        docs: ''
+        keys: ''
+        provider: ''
+      domain: example.com
+      name: Transport MATLS - HSBC OBWAC
+      tags:
+      - auth:bank_matls
+      - importer:transport-matls-apimetrics-obwac
+    settings:
+      access_token_is_urlencoded: false
+      auth_type: MANUAL
+      basic_auth_get_token_method: false
+      get_token_method: POST
+      refresh_token_workflow: null
+      ssl_cert_id: agpzfnZpYXRlc3RzchgLEgtDZXJ0aWZpY2F0ZRiAgLzB9-zFCww
+    tokens: []
+  - id: apimetrics-api
+    meta:
+      description: API that allows you to call APImetrics' API.
+      documentation:
+        apps: ''
+        docs: https://apimetrics.readme.io/v2/reference
+        keys: https://client.apimetrics.io/settings/api-key
+        provider: https://client.apimetrics.io/
+      domain: client.apimetrics.io
+      name: APImetrics API
+      tags:
+      - auth:apimetrics_api
+      - importer:apimetrics-api
+    settings:
+      auth_type: MANUAL
+      refresh_token_workflow: null
+      ssl_cert_id: null
+    tokens:
+    - id: project-access-token
+      meta:
+        domain: client.apimetrics.io
+        name: Project Access Token
+        tags:
+        - importer:project-access-token
+      token:
+        headers:
+        - key: Authorization
+          value: Bearer sbwqfg75bioO0XiMqCjUoWIT0xKdZEt7
+  calls:
+  - conditions:
+      conditions:
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: CONTENT_ERROR
+        test_result_on_true: null
+        val: ''
+        variable_name: PAYLOAD
+        variable_path: payload_str
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: CONTENT_ERROR
+        test_result_on_true: null
+        val: ''
+        variable_name: TOKEN_HEADER
+        variable_path: token.split('.')[0]
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: CONTENT_ERROR
+        test_result_on_true: null
+        val: ''
+        variable_name: TOKEN_DATA
+        variable_path: token.split('.')[1]
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: CONTENT_ERROR
+        test_result_on_true: null
+        val: ''
+        variable_name: TOKEN_HASH
+        variable_path: token.split('.')[2]
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: null
+        test_result_on_true: null
+        val: ''
+        variable_name: TOKEN_STR
+        variable_path: token
+      meta:
+        break_on_fail: true
+    id: helper-kms-sign-jwt-domestic-payment-conse
+    meta:
+      description: null
+      name: '[HELPER] KMS Sign JWT Domestic Payment Consent Create Payload'
+      tags:
+      - apimetrics:noredirect
+      - apimetrics:timeout:60
+      - apimetrics:not_monitored
+      - api_expert:exclude
+      - importer:helper-kms-sign-jwt-domestic-payment-conse
+    request:
+      auth_id: apimetrics-api
+      body: "{\n  \"header\": {\n    \"http://openbanking.org.uk/tan\": \"openbanking.org.uk\"\
+        ,\n    \"typ\": \"JOSE\",\n    \"http://openbanking.org.uk/iss\": \"{{psp_org_id}}/{{ssa_id}}\"\
+        ,\n    \"crit\": [\n      \"http://openbanking.org.uk/iat\",\n      \"http://openbanking.org.uk/iss\"\
+        ,\n      \"http://openbanking.org.uk/tan\"\n    ],\n    \"http://openbanking.org.uk/iat\"\
+        : %%UNIXTIME%%\n  },\n  \"payload\": {\n    \"Data\": {\n        \"Initiation\"\
+        : {\n        \"InstructionIdentification\": \"ACME412\",\n        \"EndToEndIdentification\"\
+        : \"FRESCO.21302.GFX.20\",\n        \"LocalInstrument\" : \"UK.OBIE.FPS\"\
+        ,\n        \"InstructedAmount\": {\n          \"Amount\": \"0.01\",\n    \
+        \      \"Currency\": \"GBP\"\n        },\n       \"CreditorAccount\": {\n\
+        \          \"SchemeName\": \"UK.OBIE.SortCodeAccountNumber\",\n          \"\
+        Identification\": \"40123412345678\",\n          \"Name\": \"Open Banking\
+        \ Test\",\n          \"SecondaryIdentification\": \"01234567890123456789\"\
+        \n        },\n        \"CreditorPostalAddress\" : {\n          \"AddressType\"\
+        : \"Correspondence\",\n          \"Department\": \"OpenBanking\",\n      \
+        \    \"SubDepartment\": \"Payments\",\n          \"StreetName\": \"Canada\
+        \ Square\",\n          \"BuildingNumber\": \"8\",\n          \"PostCode\"\
+        : \"E14 5HQ\",\n          \"TownName\": \"London\",\n          \"Country\"\
+        : \"GB\"\n        },\n        \"RemittanceInformation\": {\n          \"Unstructured\"\
+        : \"Internal ops code 5120101\",\n          \"Reference\": \"OB Test 3\"\n\
+        \        }\n      }\n    },\n    \"Risk\": {\n      \"PaymentContextCode\"\
+        : \"EcommerceGoods\",\n      \"MerchantCategoryCode\": \"5967\",\n      \"\
+        MerchantCustomerIdentification\": \"053598653254\",\n      \"DeliveryAddress\"\
+        : {\n        \"StreetName\": \"Canada Square\",\n        \"BuildingNumber\"\
+        : \"8\",\n        \"PostCode\": \"E14 5HQ\",\n        \"TownName\": \"London\"\
+        ,\n        \"Country\": \"GB\"\n      }\n    }\n  },\n  \"private_key\": {\n\
+        \    \"versionId\": {{kid_cert_version}}\n  }\n}"
+      headers:
+      - key: Accept
+        value: application/json
+      - key: Content-Type
+        value: application/json
+      method: POST
+      parameters:
+      - key: alg
+        value: PS256
+      - key: kid
+        value: '{{kid}}'
+      token_id: project-access-token
+      url: https://us-central1-viatests.cloudfunctions.net/jwt-kms-signer
+  - conditions:
+      conditions:
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: null
+        test_result_on_true: null
+        val: ''
+        variable_name: ASSERTION_JWT
+        variable_path: token
+      meta:
+        break_on_fail: true
+    id: helper-kms-sign-jwt-client-credentials-pis
+    meta:
+      description: null
+      name: '[HELPER] KMS Sign JWT Token Client Credentials'
+      tags:
+      - apimetrics:noredirect
+      - apimetrics:timeout:60
+      - apimetrics:not_monitored
+      - api_expert:exclude
+      - importer:helper-kms-sign-jwt-client-credentials-pis
+    request:
+      auth_id: apimetrics-api
+      body: "{\n  \"header\": {\n  \t\"typ\": \"JWS\"\n  },\n  \"payload\": {},\n\
+        \  \"private_key\": {\n    \"versionId\": \"{{kid_cert_version}}\"\n  }\n}"
+      headers:
+      - key: Accept
+        value: application/json
+      - key: Content-Type
+        value: application/json
+      method: POST
+      parameters:
+      - key: alg
+        value: PS256
+      - key: kid
+        value: '{{kid}}'
+      - key: iss
+        value: '{{client_id}}'
+      - key: sub
+        value: '{{client_id}}'
+      - key: expiresIn
+        value: 10m
+      - key: jti
+        value: '%%GUID%%'
+      - key: aud
+        value: https://{{token_ep}}
+      token_id: project-access-token
+      url: https://us-central1-viatests.cloudfunctions.net/jwt-kms-signer
+  - conditions: null
+    id: v31-domestic-payments-consents-get
+    meta:
+      description: null
+      name: 'v3.1: Domestic-Payments-Consents: Get'
+      tags:
+      - apimetrics:noredirect
+      - apimetrics:timeout:60
+      - importer:v31-domestic-payments-consents-get
+    request:
+      auth_id: transport-matls-apimetrics-obwac
+      body: null
+      headers:
+      - key: Accept
+        value: application/json
+      - key: Authorization
+        value: Bearer %%ACCESS_TOKEN%%
+      - key: x-fapi-financial-id
+        value: '{{financial_id}}'
+      - key: x-fapi-interaction-id
+        value: '%%GUID%%'
+      - key: x-idempotency-key
+        value: APIMetrics-%%TEST_RUN_RESULT_ID%%
+      method: GET
+      parameters: []
+      token_id: null
+      url: https://{{pisp_base_url}}/domestic-payment-consents/__CONSENT_ID__
+  - conditions:
+      conditions:
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: CONTENT_ERROR
+        test_result_on_true: null
+        val: ''
+        variable_name: CONSENT_ID
+        variable_path: Data.ConsentId
+      meta:
+        break_on_fail: true
+    id: v31-domestic-payment-consents-create
+    meta:
+      description: null
+      name: 'v3.1: Domestic Payment Consents Create'
+      tags:
+      - apimetrics:noredirect
+      - apimetrics:timeout:60
+      - importer:v31-domestic-payment-consents-create
+    request:
+      auth_id: transport-matls-apimetrics-obwac
+      body: '%%PAYLOAD%%'
+      headers:
+      - key: Accept
+        value: application/json
+      - key: Content-Type
+        value: application/json
+      - key: x-fapi-financial-id
+        value: '{{financial_id}}'
+      - key: Authorization
+        value: Bearer %%ACCESS_TOKEN%%
+      - key: x-fapi-interaction-id
+        value: '%%GUID%%'
+      - key: x-idempotency-key
+        value: APIMetrics-%%TEST_RUN_RESULT_ID%%
+      - key: x-jws-signature
+        value: '%%TOKEN_HEADER%%..%%TOKEN_HASH%%'
+      method: POST
+      parameters: []
+      token_id: null
+      url: https://{{pisp_base_url}}/domestic-payment-consents
+  - conditions:
+      conditions:
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: CONTENT_ERROR
+        test_result_on_true: null
+        val: ''
+        variable_name: ACCESS_TOKEN
+        variable_path: access_token
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: null
+        test_result_on_true: null
+        val: ''
+        variable_name: EXPIRES_IN
+        variable_path: expires_in
+      meta:
+        break_on_fail: true
+    id: oauth-access-token-client_credentials-pisp
+    meta:
+      description: null
+      name: 'OAuth: Access Token: client_credentials (PISP)'
+      tags:
+      - apimetrics:noredirect
+      - apimetrics:timeout:60
+      - importer:oauth-access-token-client_credentials-pisp
+    request:
+      auth_id: transport-matls-apimetrics-obwac
+      body: grant_type=client_credentials&scope=payments&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwt-bearer&client_assertion=__ASSERTION_JWT__
+      headers:
+      - key: Accept
+        value: application/json
+      - key: Content-Type
+        value: application/x-www-form-urlencoded
+      method: POST
+      parameters: []
+      token_id: null
+      url: https://{{token_ep}}
+  conditions: null
+  environments:
+    global:
+    - name: psp_org_id
+      value: '00158000016i44JAAQ'
+    - name: ssa_id
+      value: 'LJCtevd5JHb4nh4iL44Ygb'
+    - name: kid_cert_version
+      value: '2'
+    - name: client_id
+      value: '6-LJCtevd5JHb4nh4iL44Ygb'
+    - name: financial_id
+      value: '0015800000ti1PbAAI'
+    - name: token_ep
+      value: 'secure1t.coutts.com/as/token.oauth2'
+    - name: pisp_base_url
+      value: 'api.coutts.com/open-banking/v4.0/pisp'
+  files: []
+  meta:
+    name: _ Testing
+    tags: []
+  workflows:
+  - id: v31-domestic-payment-consents-workflow
+    meta:
+      description: null
+      name: v3.1 Domestic Payment Consents Workflow
+      tags:
+      - importer:v31-domestic-payment-consents-workflow
+    workflow:
+      call_ids:
+      - helper-kms-sign-jwt-client-credentials-pis
+      - oauth-access-token-client_credentials-pisp
+      - helper-kms-sign-jwt-domestic-payment-conse
+      - v31-domestic-payment-consents-create
+      - v31-domestic-payments-consents-get
+      handle_cookies: false
+      stop_on_failure: true
+version: '2'
