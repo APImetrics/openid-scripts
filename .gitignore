@@ -108,3 +108,4 @@ venv.bak/
 
 # Local secret, cache
 local/
+.DS_Store
