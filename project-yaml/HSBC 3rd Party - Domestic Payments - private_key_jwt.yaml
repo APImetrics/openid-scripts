@@ -108,19 +108,14 @@ project:
         ,\n    \"crit\": [\n      \"http://openbanking.org.uk/iat\",\n      \"http://openbanking.org.uk/iss\"\
         ,\n      \"http://openbanking.org.uk/tan\"\n    ],\n    \"http://openbanking.org.uk/iat\"\
         : %%UNIXTIME%%\n  },\n  \"payload\": {\n    \"Data\": {\n        \"Initiation\"\
-        : {\n        \"InstructionIdentification\": \"ACME412\",\n        \"EndToEndIdentification\"\
-        : \"FRESCO.21302.GFX.20\",\n        \"LocalInstrument\" : \"UK.OBIE.FPS\"\
+        : {\n        \"InstructionIdentification\": \"APIM-%%RESULT_ID%%\",\n        \"EndToEndIdentification\"\
+        : \"APIM-%%TEST_RUN_RESULT_ID%%\",\n        \"LocalInstrument\" : \"UK.OBIE.FPS\"\
         ,\n        \"InstructedAmount\": {\n          \"Amount\": \"0.01\",\n    \
         \      \"Currency\": \"GBP\"\n        },\n       \"CreditorAccount\": {\n\
         \          \"SchemeName\": \"UK.OBIE.SortCodeAccountNumber\",\n          \"\
-        Identification\": \"40123412345678\",\n          \"Name\": \"Open Banking\
+        Identification\": \"40044361119605\",\n          \"Name\": \"Open Banking\
         \ Test\",\n          \"SecondaryIdentification\": \"01234567890123456789\"\
-        \n        },\n        \"CreditorPostalAddress\" : {\n          \"AddressType\"\
-        : \"Correspondence\",\n          \"Department\": \"OpenBanking\",\n      \
-        \    \"SubDepartment\": \"Payments\",\n          \"StreetName\": \"Canada\
-        \ Square\",\n          \"BuildingNumber\": \"8\",\n          \"PostCode\"\
-        : \"E14 5HQ\",\n          \"TownName\": \"London\",\n          \"Country\"\
-        : \"GB\"\n        },\n        \"RemittanceInformation\": {\n          \"Unstructured\"\
+        \n        },\n        \"RemittanceInformation\": {\n          \"Unstructured\"\
         : \"Internal ops code 5120101\",\n          \"Reference\": \"OB Test 3\"\n\
         \        }\n      }\n    },\n    \"Risk\": {\n      \"PaymentContextCode\"\
         : \"EcommerceGoods\",\n      \"MerchantCategoryCode\": \"5967\",\n      \"\
@@ -324,12 +319,14 @@ project:
       value: 'LJCtevd5JHb4nh4iL44Ygb'
     - name: kid_cert_version
       value: '2'
-    - name: client_id # From Dynamic Client Registration
-      value: '6-LJCtevd5JHb4nh4iL44Ygb'
-    - name: financial_id # From OB Directory
-      value: '0015800000ti1PbAAI'
-    - name: token_ep # Get from well-known config
-      value: 'secure1t.coutts.com/as/token.oauth2'
-    - name: pisp_base_url
-      value: 'api.coutts.com/open-banking/v4.0/pisp'
+    - name: auth_method # Informational only
+      value: 'private_key_jwt'
+    # - name: client_id # From Dynamic Client Registration
+    #   value: 'TK TK TK'
+    # - name: financial_id # From OB Directory
+    #   value: '0015800000ti1PbAAI'
+    # - name: token_ep # Get from well-known config
+    #   value: 'secure1t.natwest.com/as/token.oauth2'
+    # - name: pisp_base_url
+    #   value: 'api.natwest.com/open-banking/v3.1/pisp'
 version: '2'
