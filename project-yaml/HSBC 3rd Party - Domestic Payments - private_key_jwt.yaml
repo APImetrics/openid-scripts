@@ -297,23 +297,6 @@ project:
       token_id: null
       url: https://{{token_ep}}
   conditions: null
-  environments:
-    global:
-    - name: psp_org_id
-      value: '00158000016i44JAAQ'
-    - name: ssa_id
-      value: 'LJCtevd5JHb4nh4iL44Ygb'
-    - name: kid_cert_version
-      value: '2'
-    - name: client_id
-      value: '6-LJCtevd5JHb4nh4iL44Ygb'
-    - name: financial_id
-      value: '0015800000ti1PbAAI'
-    - name: token_ep
-      value: 'secure1t.coutts.com/as/token.oauth2'
-    - name: pisp_base_url
-      value: 'api.coutts.com/open-banking/v4.0/pisp'
-  files: []
   meta:
     name: _ Testing
     tags: []
@@ -333,4 +316,20 @@ project:
       - v31-domestic-payments-consents-get
       handle_cookies: false
       stop_on_failure: true
+  environments:
+    global:
+    - name: psp_org_id
+      value: '00158000016i44JAAQ'
+    - name: ssa_id
+      value: 'LJCtevd5JHb4nh4iL44Ygb'
+    - name: kid_cert_version
+      value: '2'
+    - name: client_id # From Dynamic Client Registration
+      value: '6-LJCtevd5JHb4nh4iL44Ygb'
+    - name: financial_id # From OB Directory
+      value: '0015800000ti1PbAAI'
+    - name: token_ep # Get from well-known config
+      value: 'secure1t.coutts.com/as/token.oauth2'
+    - name: pisp_base_url
+      value: 'api.coutts.com/open-banking/v4.0/pisp'
 version: '2'

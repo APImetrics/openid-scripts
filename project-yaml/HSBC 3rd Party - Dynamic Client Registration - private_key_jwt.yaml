@@ -107,7 +107,17 @@ project:
         value: '%%GUID%%'
       token_id: project-access-token
       url: https://us-central1-viatests.cloudfunctions.net/jwt-kms-signer
-  - conditions: null
+  - conditions:
+      conditions:
+      - condition: EXISTS
+        source: RESPONSE_BODY
+        test_result_on_false: null
+        test_result_on_true: null
+        val: ''
+        variable_name: CLIENT_ID
+        variable_path: client_id
+      meta:
+        break_on_fail: true
     id: dynamic-client-registration-create
     meta:
       description: null
@@ -127,23 +137,6 @@ project:
       parameters: []
       token_id: null
       url:  https://{{register_ep}}
-  environments:
-    global:
-    - name: kid
-      value: 'DL-hoOIKglmeQLf10iNnQxnnI6M'
-    - name: kid_cert_version
-      value: '2'
-    - name: redirect_uri
-      value: 'https://client.apimetrics.io/tokens/callback'
-    - name: software_statement
-      value: 'eyJhbGciOiJQUzI1NiIsImtpZCI6InRWZnVWX1V6bTF3b09pREJVLUxJdHluT0JhUHI3RHNRVUxfbVdQOU1mS1U9IiwidHlwIjoiSldUIn0.eyJpc3MiOiJPcGVuQmFua2luZyBMdGQiLCJpYXQiOjE3NTAyODc1MjksImp0aSI6ImE3NjgzNzhkYmE3MjQyNDIiLCJzb2Z0d2FyZV9lbnZpcm9ubWVudCI6InByb2R1Y3Rpb24iLCJzb2Z0d2FyZV9tb2RlIjoiTGl2ZSIsInNvZnR3YXJlX2lkIjoiTEpDdGV2ZDVKSGI0bmg0aUw0NFlnYiIsInNvZnR3YXJlX2NsaWVudF9pZCI6IkxKQ3RldmQ1SkhiNG5oNGlMNDRZZ2IiLCJzb2Z0d2FyZV9jbGllbnRfbmFtZSI6IkhTQkMiLCJzb2Z0d2FyZV9jbGllbnRfZGVzY3JpcHRpb24iOiJIU0JDIGhlYWx0aCBjaGVjayBNb25pdG9yaW5nIiwic29mdHdhcmVfdmVyc2lvbiI6IjQuMCIsInNvZnR3YXJlX2NsaWVudF91cmkiOiJodHRwczovL2RldmVsb3AuaHNiYy5jb20iLCJzb2Z0d2FyZV9yZWRpcmVjdF91cmlzIjpbImh0dHBzOi8vY2xpZW50LmFwaW1ldHJpY3MuaW8vdG9rZW5zL2NhbGxiYWNrIl0sInNvZnR3YXJlX3JvbGVzIjpbIkFJU1AiLCJDQlBJSSIsIlBJU1AiXSwib3JnYW5pc2F0aW9uX2NvbXBldGVudF9hdXRob3JpdHlfY2xhaW1zIjp7ImF1dGhvcml0eV9pZCI6IkZDQUdCUiIsInJlZ2lzdHJhdGlvbl9pZCI6Ijc2NTExMiIsInN0YXR1cyI6IkFjdGl2ZSIsImF1dGhvcmlzYXRpb25zIjpbeyJtZW1iZXJfc3RhdGUiOiJHSSIsInJvbGVzIjpbIkFJU1AiLCJDQlBJSSIsIkFTUFNQIiwiUElTUCJdfSx7Im1lbWJlcl9zdGF0ZSI6IkdCIiwicm9sZXMiOlsiQUlTUCIsIkNCUElJIiwiQVNQU1AiLCJQSVNQIl19XX0sInNvZnR3YXJlX2xvZ29fdXJpIjoiaHR0cHM6Ly9kZXZlbG9wLmhzYmMuY29tIiwib3JnX3N0YXR1cyI6IkFjdGl2ZSIsIm9yZ19pZCI6IjAwMTU4MDAwMDE2aTQ0SkFBUSIsIm9yZ19uYW1lIjoiSFNCQyBVSyBCYW5rIFBsYyIsIm9yZ19jb250YWN0cyI6W3sibmFtZSI6IlRlY2huaWNhbCIsImVtYWlsIjoib3BlbmJhbmtpbmdzdXBwb3J0QGhzYmMuY29tIiwicGhvbmUiOiIwNzg1NDQwODAyNiIsInR5cGUiOiJUZWNobmljYWwifSx7Im5hbWUiOiJCdXNpbmVzcyIsImVtYWlsIjoib3BlbmJhbmtpbmdzdXBwb3J0QGhzYmMuY29tIiwicGhvbmUiOiIwNzg1NDQwODAyNiIsInR5cGUiOiJCdXNpbmVzcyJ9XSwib3JnX2p3a3NfZW5kcG9pbnQiOiJodHRwczovL2tleXN0b3JlLm9wZW5iYW5raW5nLm9yZy51ay8wMDE1ODAwMDAxNmk0NEpBQVEvMDAxNTgwMDAwMTZpNDRKQUFRLmp3a3MiLCJvcmdfandrc19yZXZva2VkX2VuZHBvaW50IjoiaHR0cHM6Ly9rZXlzdG9yZS5vcGVuYmFua2luZy5vcmcudWsvMDAxNTgwMDAwMTZpNDRKQUFRL3Jldm9rZWQvMDAxNTgwMDAwMTZpNDRKQUFRLmp3a3MiLCJzb2Z0d2FyZV9qd2tzX2VuZHBvaW50IjoiaHR0cHM6Ly9rZXlzdG9yZS5vcGVuYmFua2luZy5vcmcudWsvMDAxNTgwMDAwMTZpNDRKQUFRL0xKQ3RldmQ1SkhiNG5oNGlMNDRZZ2IuandrcyIsInNvZnR3YXJlX2p3a3NfcmV2b2tlZF9lbmRwb2ludCI6Imh0dHBzOi8va2V5c3RvcmUub3BlbmJhbmtpbmcub3JnLnVrLzAwMTU4MDAwMDE2aTQ0SkFBUS9yZXZva2VkL0xKQ3RldmQ1SkhiNG5oNGlMNDRZZ2IuandrcyIsInNvZnR3YXJlX3BvbGljeV91cmkiOiJodHRwczovL2RldmVsb3AuaHNiYy5jb20iLCJzb2Z0d2FyZV90b3NfdXJpIjoiaHR0cHM6Ly9kZXZlbG9wLmhzYmMuY29tIiwic29mdHdhcmVfb25fYmVoYWxmX29mX29yZyI6bnVsbH0.HQbmkX35eacoO2mJryA_JcLW4wfrovVU4HqqVfqHeHRNHQ53hwMxhY6JZ772lnoU3QAiTUxRoLeHhdrutRKXZ5r8Vh5eQnrtnbKPfU5NHprLG2ceWz0UeXvEEnv8b5nv-3wy27kar6MIkVNgh32auwoBeEMI71lXAILm2H_Ig-WMt9DFJ3NcUfACNjkwsT0-qVK5Ms8fIqvZuzetMhc9F8v5n6DdaVChAWvY8lccyS9mX__rd0xpqrxgxQxKeQjI4BD-7OmSA7qiYLNi9hEbIFpI6Me9CRHL8F7ks8Tqu0NI8hBHcGJ1TeVxYN0TbzsJVY8owe7Kzgg_u9BwAjhZ-Q'
-    - name: ssa_id
-      value: 'LJCtevd5JHb4nh4iL44Ygb'
-    - name: aud
-      value: '00158000016i44JAAQ' # HSBC ASPSP
-    - name: register_ep
-      value: 'secure-api.bankofscotland.co.uk/prod01/lbg/dcr-api/v1.0/register'
-  files: []
   meta:
     name: HSBC 3rd Party - Dynamic Client Registration
     tags: []
@@ -161,4 +154,20 @@ project:
       - dynamic-client-registration-create
       handle_cookies: false
       stop_on_failure: true
+  environments:
+    global:
+    - name: kid
+      value: 'DL-hoOIKglmeQLf10iNnQxnnI6M'
+    - name: kid_cert_version
+      value: '2'
+    - name: redirect_uri
+      value: 'https://client.apimetrics.io/tokens/callback'
+    - name: software_statement
+      value: 'eyJhbGciOiJQUzI1NiIsImtpZCI6InRWZnVWX1V6bTF3b09pREJVLUxJdHluT0JhUHI3RHNRVUxfbVdQOU1mS1U9IiwidHlwIjoiSldUIn0.eyJpc3MiOiJPcGVuQmFua2luZyBMdGQiLCJpYXQiOjE3NTAyOTExMzksImp0aSI6ImUxYTY3NDhlYmM2NDQ4NzUiLCJzb2Z0d2FyZV9lbnZpcm9ubWVudCI6InByb2R1Y3Rpb24iLCJzb2Z0d2FyZV9tb2RlIjoiTGl2ZSIsInNvZnR3YXJlX2lkIjoiTEpDdGV2ZDVKSGI0bmg0aUw0NFlnYiIsInNvZnR3YXJlX2NsaWVudF9pZCI6IkxKQ3RldmQ1SkhiNG5oNGlMNDRZZ2IiLCJzb2Z0d2FyZV9jbGllbnRfbmFtZSI6IkhTQkMiLCJzb2Z0d2FyZV9jbGllbnRfZGVzY3JpcHRpb24iOiJIU0JDIGhlYWx0aCBjaGVjayBNb25pdG9yaW5nIiwic29mdHdhcmVfdmVyc2lvbiI6IjQuMCIsInNvZnR3YXJlX2NsaWVudF91cmkiOiJodHRwczovL2RldmVsb3AuaHNiYy5jb20iLCJzb2Z0d2FyZV9yZWRpcmVjdF91cmlzIjpbImh0dHBzOi8vY2xpZW50LmFwaW1ldHJpY3MuaW8vdG9rZW5zL2NhbGxiYWNrIl0sInNvZnR3YXJlX3JvbGVzIjpbIkFJU1AiLCJDQlBJSSIsIlBJU1AiXSwib3JnYW5pc2F0aW9uX2NvbXBldGVudF9hdXRob3JpdHlfY2xhaW1zIjp7ImF1dGhvcml0eV9pZCI6IkZDQUdCUiIsInJlZ2lzdHJhdGlvbl9pZCI6Ijc2NTExMiIsInN0YXR1cyI6IkFjdGl2ZSIsImF1dGhvcmlzYXRpb25zIjpbeyJtZW1iZXJfc3RhdGUiOiJHSSIsInJvbGVzIjpbIkFJU1AiLCJDQlBJSSIsIkFTUFNQIiwiUElTUCJdfSx7Im1lbWJlcl9zdGF0ZSI6IkdCIiwicm9sZXMiOlsiQUlTUCIsIkNCUElJIiwiQVNQU1AiLCJQSVNQIl19XX0sInNvZnR3YXJlX2xvZ29fdXJpIjoiaHR0cHM6Ly9kZXZlbG9wLmhzYmMuY29tIiwib3JnX3N0YXR1cyI6IkFjdGl2ZSIsIm9yZ19pZCI6IjAwMTU4MDAwMDE2aTQ0SkFBUSIsIm9yZ19uYW1lIjoiSFNCQyBVSyBCYW5rIFBsYyIsIm9yZ19jb250YWN0cyI6W3sibmFtZSI6IlRlY2huaWNhbCIsImVtYWlsIjoib3BlbmJhbmtpbmdzdXBwb3J0QGhzYmMuY29tIiwicGhvbmUiOiIwNzg1NDQwODAyNiIsInR5cGUiOiJUZWNobmljYWwifSx7Im5hbWUiOiJCdXNpbmVzcyIsImVtYWlsIjoib3BlbmJhbmtpbmdzdXBwb3J0QGhzYmMuY29tIiwicGhvbmUiOiIwNzg1NDQwODAyNiIsInR5cGUiOiJCdXNpbmVzcyJ9XSwib3JnX2p3a3NfZW5kcG9pbnQiOiJodHRwczovL2tleXN0b3JlLm9wZW5iYW5raW5nLm9yZy51ay8wMDE1ODAwMDAxNmk0NEpBQVEvMDAxNTgwMDAwMTZpNDRKQUFRLmp3a3MiLCJvcmdfandrc19yZXZva2VkX2VuZHBvaW50IjoiaHR0cHM6Ly9rZXlzdG9yZS5vcGVuYmFua2luZy5vcmcudWsvMDAxNTgwMDAwMTZpNDRKQUFRL3Jldm9rZWQvMDAxNTgwMDAwMTZpNDRKQUFRLmp3a3MiLCJzb2Z0d2FyZV9qd2tzX2VuZHBvaW50IjoiaHR0cHM6Ly9rZXlzdG9yZS5vcGVuYmFua2luZy5vcmcudWsvMDAxNTgwMDAwMTZpNDRKQUFRL0xKQ3RldmQ1SkhiNG5oNGlMNDRZZ2IuandrcyIsInNvZnR3YXJlX2p3a3NfcmV2b2tlZF9lbmRwb2ludCI6Imh0dHBzOi8va2V5c3RvcmUub3BlbmJhbmtpbmcub3JnLnVrLzAwMTU4MDAwMDE2aTQ0SkFBUS9yZXZva2VkL0xKQ3RldmQ1SkhiNG5oNGlMNDRZZ2IuandrcyIsInNvZnR3YXJlX3BvbGljeV91cmkiOiJodHRwczovL2RldmVsb3AuaHNiYy5jb20iLCJzb2Z0d2FyZV90b3NfdXJpIjoiaHR0cHM6Ly9kZXZlbG9wLmhzYmMuY29tIiwic29mdHdhcmVfb25fYmVoYWxmX29mX29yZyI6bnVsbH0.Z6xUCcEyTmM6-tvlM_RT4qf0JouHn_tjv6i2rHCdYgdA7Dif3n1iOR2R85-alryln142osFnqCEiSFwvGWW0QqOg0siDdZeagZnY-MACC2FAuS0TN6LpoUHXcUGdpi2vWlm6LsGLS_PE5HtW5-IDoGEMbmT__L95y4QIeWh8t19ZxPWzWQeBlP4Oujq_6d1NIshizzkzZ5OHgrA4ZuiPmBviFukNZY0ZzEnqRmBHPVpWpNUvsPwd_gbYWMNhr7uAxBvVQyBDoAGdABqOd9qIDzHRqVHiUky7e06E4khvFdHMAmPOaLZLGqUWbbZ_gA0INCJTmQOzmGPfZShKuX7g5A'
+    - name: ssa_id
+      value: 'LJCtevd5JHb4nh4iL44Ygb'
+    - name: aud
+      value: '00158000016i44JAAQ' # HSBC ASPSP ID '00158000016i44JAAQ' (alternatively use token server domain e.g. 'https://api.ob.business.hsbc.co.uk')
+    - name: register_ep # Get from well-known config
+      value: 'secure-api.lloydsbank.com/prod01/lbg/dcr-api/v1.0/register'
 version: '2'
