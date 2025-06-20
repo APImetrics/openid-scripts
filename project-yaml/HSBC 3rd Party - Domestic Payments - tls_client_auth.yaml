@@ -136,6 +136,8 @@ project:
         value: PS256
       - key: kid
         value: '{{kid}}'
+      - key: minimize
+        value: 'true'
       token_id: project-access-token
       url: https://us-central1-viatests.cloudfunctions.net/jwt-kms-signer
   - conditions: null

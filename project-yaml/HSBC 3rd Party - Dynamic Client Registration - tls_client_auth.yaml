@@ -66,7 +66,7 @@ project:
     id: sign-dynamic-client-registration-jwt-with
     meta:
       description: null
-      name: Sign Dynamic Client Registration JWT with KMS Cert
+      name: '[HELPER] Sign Dynamic Client Registration JWT with KMS Cert'
       tags:
       - api_type:create
       - sector:devtools
